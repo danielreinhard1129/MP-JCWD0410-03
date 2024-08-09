@@ -63,7 +63,7 @@ const eventData = [
     id: 6,
     category: "Music",
     image:
-      "https://api.yesplis.com/images/banner/a453aa4cbfce25c6720e7eb14208df38ee5a6b05.png",
+      "https://api.yesplis.com/images/banner/317f68f2242d7ec4365d7e1dbd1f924ff4b69072.png",
     title: "Heritage 90's Concert",
     city: "Bali",
     date: "01 November 2024",
@@ -75,10 +75,12 @@ const EventTrendingCards: React.FC = () => {
   const swiperRef = useRef<any>(null);
 
   return (
-    <div className="group container relative mt-[60px] flex max-w-7xl flex-col gap-8 px-0">
-      <div className="flex flex-row justify-between">
+    <div className="group relative mt-[30px] flex-col px-6 lg:container lg:mt-[30px] lg:flex lg:max-w-7xl lg:gap-8 lg:px-0">
+      <div className="flex flex-row items-center justify-between">
         <p className="text-2xl font-semibold">Trending Now</p>
-        <div className="flex flex-row gap-4">
+
+        {/* Navigation buttons for desktop */}
+        <div className="hidden flex-row gap-4 md:flex">
           <button
             className="flex items-center justify-center rounded-full bg-gray-500 p-3 text-white opacity-50 transition-opacity duration-300 hover:opacity-100"
             onClick={() => swiperRef.current?.swiper.slidePrev()}
@@ -94,12 +96,10 @@ const EventTrendingCards: React.FC = () => {
         </div>
       </div>
 
-      <div className="">
+      <div className="mt-5 overflow-hidden">
         <Swiper
-          spaceBetween={42}
-          slidesPerView={4}
+          spaceBetween={15}
           loop={true}
-          pagination={{ clickable: true, el: ".swiper-pagination" }}
           navigation={{
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev",
@@ -107,40 +107,51 @@ const EventTrendingCards: React.FC = () => {
           modules={[Navigation, Pagination]}
           className="relative"
           ref={swiperRef}
+          breakpoints={{
+            640: {
+              slidesPerView: 1.2, // Lebih kecil pada layar mobile
+              spaceBetween: 10,
+            },
+            768: {
+              slidesPerView: 2, // tablet
+              spaceBetween: 15,
+            },
+            1024: {
+              slidesPerView: 4, // desktop
+              spaceBetween: 20,
+            },
+          }}
         >
           {eventData.map((event) => (
             <SwiperSlide key={event.id}>
-              <div className="w-[18rem] overflow-hidden rounded-lg border border-gray-200">
-                <div className="m-0 rounded-none">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="h-[200px] w-full"
-                  />
-                </div>
+              <div className="w-full overflow-hidden rounded-lg border border-gray-200">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="h-[150px] w-full object-cover md:h-[180px]"
+                />
                 <div className="p-4">
                   <p className="truncate text-sm font-bold text-red-500">
                     {event.category}
                   </p>
-                  <h4 className="text-md text-blue-gray-900 mt-3 truncate font-semibold">
+                  <h4 className="text-md text-blue-gray-900 mt-2 truncate font-semibold">
                     {event.title}
                   </h4>
-                  <p className="mt-3 truncate text-sm text-gray-600">
+                  <p className="mt-2 truncate text-sm text-gray-600">
                     {event.city}
                   </p>
-                  <p className="mt-3 truncate text-sm text-gray-600">
+                  <p className="mt-1 truncate text-sm text-gray-600">
                     {event.date}
                   </p>
-                </div>
-                <div className="flex items-center justify-between border-t-[1px] border-gray-200 p-4">
-                  <p className="text-xs text-gray-500">Price</p>
-                  <p className="font-bold">IDR {event.price}</p>
+                  <div className="mt-4 flex items-center justify-between border-t-[1px] border-gray-200 pt-2">
+                    <p className="text-xs text-gray-500">Price</p>
+                    <p className="font-bold">IDR {event.price}</p>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="swiper-pagination mt-4"></div>
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ const eventData = [
     id: 6,
     category: "Music",
     image:
-      "https://api.yesplis.com/images/banner/a453aa4cbfce25c6720e7eb14208df38ee5a6b05.png",
+      "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
     title: "Heritage 90's Concert",
     city: "Bali",
     date: "01 November 2024",
@@ -81,7 +81,7 @@ const eventData = [
     id: 7,
     category: "Music",
     image:
-      "https://api.yesplis.com/images/banner/a453aa4cbfce25c6720e7eb14208df38ee5a6b05.png",
+      "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
     title: "Heritage 90's Concert",
     city: "Bali",
     date: "01 November 2024",
@@ -91,7 +91,7 @@ const eventData = [
     id: 8,
     category: "Music",
     image:
-      "https://api.yesplis.com/images/banner/a453aa4cbfce25c6720e7eb14208df38ee5a6b05.png",
+      "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
     title: "Heritage 90's Concert",
     city: "Bali",
     date: "01 November 2024",
@@ -151,7 +151,7 @@ const eventData = [
     id: 14,
     category: "Music",
     image:
-      "https://api.yesplis.com/images/banner/a453aa4cbfce25c6720e7eb14208df38ee5a6b05.png",
+      "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
     title: "Heritage 90's Concert",
     city: "Bali",
     date: "01 November 2024",
@@ -174,19 +174,21 @@ const EventCardLists: React.FC = () => {
   const [showAll, setShowAll] = useState(false);
 
   const eventsToShow = showAll ? eventData : eventData.slice(0, 8);
+
   return (
-    <div className="group container relative my-[60px] flex max-w-7xl flex-col gap-8 px-0">
-      <p className="text-2xl font-semibold">Events</p>
-      <div className="flex max-w-7xl flex-row gap-6 px-0">
-        {/* sort by */}
-        <div className="flex flex-col gap-4">
-          <p className="text-base text-[#707070]">Sort by</p>
+    <div className="lg: container relative my-[30px] max-w-7xl px-4 lg:my-[60px] lg:px-0">
+      <p className="mb-4 text-2xl font-semibold">Events</p>
+
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:gap-6">
+        {/* Sort by */}
+        <div className="w-full lg:w-fit">
+          <p className="mb-2 text-base text-[#707070]">Sort by</p>
           <Select
             value={selectedSort}
             onValueChange={(value) => setSelectedSort(value)}
           >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="" />
+            <SelectTrigger className="w-full lg:w-[150px]">
+              <SelectValue placeholder="Select an option" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -201,52 +203,59 @@ const EventCardLists: React.FC = () => {
             </SelectContent>
           </Select>
         </div>
-        {/* input*/}
-        <div className="flex flex-col gap-4">
-          <p className="text-base text-[#707070]">Event Location</p>
-          <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input type="location" placeholder="Search Location" />
+
+        {/* Event Location */}
+        <div className="w-full lg:w-[400px]">
+          <p className="mb-2 text-base text-[#707070]">Event Location</p>
+          <div className="flex w-full items-center space-x-2">
+            <Input
+              type="text"
+              placeholder="Search Location"
+              className="flex-grow"
+            />
             <Button type="button" className="bg-[#FF8000] hover:bg-[#E67300]">
               <FaLocationDot />
             </Button>
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap gap-[42px] pb-4">
+
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {eventsToShow.map((event) => (
           <div
-            className="w-[18rem] cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm"
+            className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm"
             key={event.id}
           >
             <div className="m-0 rounded-none">
               <img
                 src={event.image}
                 alt={event.title}
-                className="h-[200px] w-full"
+                className="h-[100px] w-full object-fill lg:h-[150px] lg:object-cover"
               />
             </div>
-            <div className="p-4">
-              <p className="truncate text-sm font-bold text-red-500">
+            <div className="p-3">
+              <p className="truncate lg:text-sm text-xs font-bold text-red-500">
                 {event.category}
               </p>
-              <h4 className="text-md text-blue-gray-900 mt-3 truncate font-semibold">
+              <h4 className="lg:text-md text-sm text-blue-gray-900 mt-2 truncate font-semibold">
                 {event.title}
               </h4>
-              <p className="mt-3 truncate text-sm text-gray-600">
+              <p className="mt-2 truncate lg:text-sm text-xs text-gray-600">
                 {event.city}
               </p>
-              <p className="mt-3 truncate text-sm text-gray-600">
+              <p className="mt-2 truncate lg:text-sm text-xs  text-gray-600">
                 {event.date}
               </p>
             </div>
-            <div className="flex items-center justify-between border-t-[1px] border-gray-200 p-4">
+            <div className="flex items-center justify-between border-t-[1px] border-gray-200 p-3">
               <p className="text-xs text-gray-500">Price</p>
-              <p className="font-bold">IDR {event.price}</p>
+              <p className="font-bold text-sm">IDR {event.price}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="flex justify-center">
+
+      <div className="mt-6 flex justify-center">
         <Button
           variant={"outline"}
           className="border-[#0080ff] text-[#0080ff] hover:border-[#0066CC] hover:bg-[#FFF] hover:text-[#0066CC]"
@@ -258,4 +267,5 @@ const EventCardLists: React.FC = () => {
     </div>
   );
 };
+
 export default EventCardLists;

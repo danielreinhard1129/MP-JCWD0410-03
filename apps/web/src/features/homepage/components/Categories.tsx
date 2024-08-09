@@ -1,23 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React from "react";
-import { FaMusic, FaFilm, FaArtstation, FaTheaterMasks } from "react-icons/fa";
-import { SiDiscogs } from "react-icons/si";
-import { MdSportsScore } from "react-icons/md";
+import { FaArtstation, FaFilm, FaMusic, FaTheaterMasks } from "react-icons/fa";
 import { GiHeartWings } from "react-icons/gi";
 import { IoGameController } from "react-icons/io5";
-import { FaLocationDot } from "react-icons/fa6";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { MdSportsScore } from "react-icons/md";
+import { SiDiscogs } from "react-icons/si";
 
 import { useState } from "react";
 
@@ -34,20 +22,28 @@ const categoriesList = [
 
 const Categories = () => {
   const [selectedSort, setSelectedSort] = useState("Newly_added");
+
   return (
-    <div className="my-[60px] flex flex-col gap-14">
-      <div className="container my-[0px] flex max-w-7xl flex-row justify-between px-0">
-        {categoriesList.map((category, index) => (
-          <div key={index} className="flex flex-col gap-y-3 text-center">
-            <Button
-              variant="outline"
-              className="h-[100px] w-[100px] rounded-full hover:bg-[#0080ff]/[0.2]"
+    <div className="my-6 flex flex-col px-6 lg:my-16">
+      <div className="lg:container lg:max-w-7xl lg:px-0">
+        <div className="lg-flex-row grid grid-cols-4 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:flex lg:justify-between">
+          {categoriesList.map((category, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center gap-y-2 text-center"
             >
-              <category.icon className="h-8 w-8" />
-            </Button>
-            <p className="">{category.name}</p>
-          </div>
-        ))}
+              <Button
+                variant="outline"
+                className="flex h-16 w-16 items-center justify-center rounded-full hover:bg-[#0080ff]/[0.2] sm:h-20 sm:w-20 lg:h-24 lg:w-24"
+              >
+                <category.icon className="h-8 w-8 text-[#0080ff] hover:text-[#0066CC] sm:h-10 sm:w-10 lg:h-12 lg:w-12" />
+              </Button>
+              <p className="text-xs font-medium text-gray-700 lg:text-sm">
+                {category.name}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
