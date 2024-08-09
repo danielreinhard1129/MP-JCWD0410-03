@@ -1,5 +1,4 @@
-// Import Swiper React components
-'use client'
+"use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -8,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-// import required modules
+// Import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 const images = [
@@ -21,7 +20,7 @@ const images = [
 
 export default function JumbotronSlider() {
   return (
-    <div>
+    <div className="relative p-6 lg:mt-[40px]" >
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -29,20 +28,16 @@ export default function JumbotronSlider() {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper max-w-7xl h-[400px] max-h-400 object-fill rounded-lg my-[60px]"
+        className="mySwiper my-[30px] h-[200px] lg:my-[0px] lg:h-[350px] lg:max-w-7xl lg:rounded-lg rounded-lg"
         loop={true}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={index} className="relative">
             <img
               src={image}
-              alt={`Slide,${index}`}
-              className="h-full w-full object-fill"
+              alt={`Slide ${index}`}
+              className="absolute inset-0 h-full lg:w-full"
             />
           </SwiperSlide>
         ))}
