@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppSelector } from "@/redux/hooks";
 import { Avatar } from "@radix-ui/react-avatar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -13,7 +13,6 @@ import LoginModal from "@/features/login/components/LoginModal";
 const navigation = [
   { name: "Browse Events", href: "/events" },
   { name: "Create Events", href: "/help" },
-  { name: "Help", href: "/help" },
   { name: "About Us", href: "/about" },
 ];
 
@@ -30,14 +29,9 @@ const NavbarPage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -46,20 +40,20 @@ const NavbarPage = () => {
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 mx-0 bg-white transition-shadow ${
+        className={`sticky top-0 z-50 bg-white transition-shadow ${
           isScrolled ? "shadow-md" : ""
         }`}
       >
-        <div className="lg:py-6 container mx-auto flex flex-col items-center px-6 py-1 md:flex-row lg:container lg:max-w-7xl lg:px-0">
+        <div className="container mx-auto mb-[30px] flex flex-col items-center px-6 py-4 lg:flex lg:w-full lg:max-w-7xl lg:flex-row lg:justify-between lg:px-0 lg:py-6">
           {/* Top Row: Logo and Hamburger */}
-          <div className="flex w-full items-center justify-between md:justify-start">
+          <div className="flex w-full justify-between lg:w-full">
             <Link href="/">
               <span className="cursor-pointer text-xl font-bold">
                 <span className="text-[#0080ff]">Ronmes</span> Sphere
               </span>
             </Link>
             <button
-              className="block text-2xl md:hidden"
+              className="block text-2xl lg:hidden"
               onClick={handleMenuToggle}
               aria-label="Toggle Menu"
             >
@@ -68,7 +62,7 @@ const NavbarPage = () => {
           </div>
 
           {/* Mobile Search Input */}
-          <div className="mt-6 w-full md:hidden">
+          <div className="mt-6 w-full lg:hidden">
             <Input
               type="search"
               placeholder="Search events"
@@ -77,53 +71,54 @@ const NavbarPage = () => {
           </div>
 
           {/* Search Bar and Desktop Menu */}
-          <div className="mt-4 flex w-full flex-col items-center md:mt-0 md:flex-row">
-            <div className="flex flex-grow items-center justify-between md:justify-start lg:gap-3">
-              <Input
-                type="search"
-                placeholder="Search events"
-                className="hidden flex-grow md:block lg:w-[300px]"
-              />
-              <Button
-                type="submit"
-                onClick={() => {}}
-                className="hidden bg-[#0080ff] hover:bg-[#0066CC] md:block"
-              >
-                <FaSearch />
-              </Button>
-            </div>
-            <div className="hidden md:ml-4 md:flex md:gap-4">
-              {navigation.map((item) => (
+          <div className="mt-4 flex w-full flex-col items-center md:mt-0 md:flex-row md:justify-between">
+            <div className="flex items-center lg:flex lg:w-full lg:flex-row lg:justify-between lg:gap-10">
+              <div className="lg:flex lg:flex-row lg:gap-2">
+                <Input
+                  type="search"
+                  placeholder="Search events"
+                  className="hidden flex-grow lg:block lg:w-[450px]"
+                />
                 <Button
-                  key={item.name}
-                  variant="link"
-                  className="cursor-pointer text-gray-700 hover:text-gray-900"
+                  type="submit"
+                  className="hidden bg-[#0080ff] hover:bg-[#0066CC] lg:block"
                 >
-                  <Link href={item.href}>
-                    <span>{item.name}</span>
-                  </Link>
+                  <FaSearch />
                 </Button>
-              ))}
-              {id ? (
-                <Link href="/profile">
-                  <Avatar>
-                    <AvatarImage
-                      src="https://github.com/shadcn.png"
-                      alt="@shadcn"
-                    />
-                    <AvatarFallback>RM</AvatarFallback>
-                  </Avatar>
-                </Link>
-              ) : (
-                <>
-                  <Button variant="ghost" onClick={handleLoginOpen}>
-                    <Link href={"#"}>Login</Link>
+              </div>
+              <div className="hidden lg:flex lg:gap-4">
+                {navigation.map((item) => (
+                  <Button
+                    key={item.name}
+                    variant="link"
+                    className="cursor-pointer px-2 text-gray-700 hover:text-gray-900"
+                  >
+                    <Link href={item.href}>
+                      <span>{item.name}</span>
+                    </Link>
                   </Button>
-                  <Button className="bg-[#0080ff] hover:bg-[#0066CC]">
-                    <Link href={"#"}>Get Started</Link>
-                  </Button>
-                </>
-              )}
+                ))}
+                {id ? (
+                  <Link href="/profile">
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="@shadcn"
+                      />
+                      <AvatarFallback>RM</AvatarFallback>
+                    </Avatar>
+                  </Link>
+                ) : (
+                  <>
+                    <Button variant="ghost" onClick={handleLoginOpen}>
+                      <Link href={"#"}>Login</Link>
+                    </Button>
+                    <Button className="bg-[#0080ff] hover:bg-[#0066CC]">
+                      <Link href={"#"}>Get Started</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -132,7 +127,7 @@ const NavbarPage = () => {
         <div
           className={`fixed inset-0 z-40 transform bg-white transition-transform ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
-          } md:hidden`}
+          } lg:hidden`}
         >
           <div className="flex flex-col p-6">
             <button
@@ -189,7 +184,6 @@ const NavbarPage = () => {
             </div>
           </div>
         </div>
-        {/* End mobile menu */}
       </nav>
       <LoginModal isOpen={isLoginOpen} onClose={handleLoginClose} />
     </>
