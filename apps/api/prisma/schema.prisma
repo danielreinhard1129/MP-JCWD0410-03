@@ -19,3 +19,205 @@ model Sample {
 
   @@map("samples") // if you want to use snake_case format
 }
+
+model Event {
+  id           Int           @id @default(autoincrement())
+  title        String
+  address      String
+  thumbnail    String
+  price        Int
+  startDate    DateTime
+  endDate      DateTime
+  quota        Int
+  booked       Int
+  description  String        @db.LongText
+  is_deleted   Boolean
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  tickets      Ticket[]
+  categories   Category[]
+  vouchers     Voucher[]
+  transactions Transaction[]
+  reviews      Review[]
+
+  @@map("events")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String
+  image          String?
+  address        String?
+  phone_number   String?
+  role           Role     @default(CUSTOMERS)
+  password       String
+  referal_number String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  events       Event[]
+  user_points  UserPoint[]
+  tickets      Ticket[]
+  transactions Transaction[]
+  reviews      Review[]
+  voucherUsers VoucherUser[]
+  rewardUsers  RewardUser[]
+
+  @@map("users")
+}
+
+enum Role {
+  ORGANIZERS
+  CUSTOMERS
+}
+
+model UserPoint {
+  id           Int      @id @default(autoincrement())
+  points       Int
+  expired_date DateTime
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("user_points")
+}
+
+model Ticket {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tickets")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  title     String
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Voucher {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  discount    Int
+  quota       Int
+  claimed     Boolean
+  expiredDate DateTime
+  eventId     Int
+  event       Event         @relation(fields: [eventId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  VoucherUser VoucherUser[]
+
+  @@map("vouchers")
+}
+
+model Transaction {
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  user          User              @relation(fields: [userId], references: [id])
+  eventId       Int
+  event         Event             @relation(fields: [eventId], references: [id])
+  qty           Int
+  status        TransactionStatus
+  paymentMethod PaymentMethod
+  pointUsed     Int               @default(0)
+  voucherUsed   Int               @default(0)
+  rewardUsed    Int               @default(0)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("transactions")
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELED
+}
+
+enum PaymentMethod {
+  QRIS
+  BANK_TRANSFER
+  EWALLET
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  comment   String?  @db.LongText
+  rating    Int?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+model VoucherUser {
+  id        Int           @id @default(autoincrement())
+  voucherId Int
+  voucher   Voucher       @relation(fields: [voucherId], references: [id])
+  userId    Int
+  user      User          @relation(fields: [userId], references: [id])
+  status    VoucherStatus
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@map("voucher_users")
+}
+
+enum VoucherStatus {
+  USED
+  NOT_USED
+}
+
+model Reward {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String       @db.LongText
+  discount    Int
+  quota       Int
+  claimed     Boolean
+  expiredDate DateTime
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  rewardUsers RewardUser[]
+
+  @@map("rewards")
+}
+
+model RewardUser {
+  id        Int          @id @default(autoincrement())
+  rewardId  Int
+  reward    Reward       @relation(fields: [rewardId], references: [id])
+  userId    Int
+  user      User         @relation(fields: [userId], references: [id])
+  status    RewardStatus
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@map("reward_users")
+}
+
+enum RewardStatus {
+  USED
+  NOT_USED
+}

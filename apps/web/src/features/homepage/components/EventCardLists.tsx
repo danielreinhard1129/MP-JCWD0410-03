@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import "swiper/css";
@@ -222,36 +223,38 @@ const EventCardLists: React.FC = () => {
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {eventsToShow.map((event) => (
-          <div
-            className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm"
-            key={event.id}
-          >
-            <div className="m-0 rounded-none">
-              <img
-                src={event.image}
-                alt={event.title}
-                className="h-[100px] w-full object-fill lg:h-[150px] lg:object-cover"
-              />
+          <Link href={`/events/${event.id}`}>
+            <div
+              className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm"
+              key={event.id}
+            >
+              <div className="m-0 rounded-none">
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="h-[100px] w-full object-fill lg:h-[150px] lg:object-cover"
+                />
+              </div>
+              <div className="p-3">
+                <p className="truncate text-xs font-bold text-red-500 lg:text-sm">
+                  {event.category}
+                </p>
+                <h4 className="lg:text-md text-blue-gray-900 mt-2 truncate text-sm font-semibold">
+                  {event.title}
+                </h4>
+                <p className="mt-2 truncate text-xs text-gray-600 lg:text-sm">
+                  {event.city}
+                </p>
+                <p className="mt-2 truncate text-xs text-gray-600 lg:text-sm">
+                  {event.date}
+                </p>
+              </div>
+              <div className="flex items-center justify-between border-t-[1px] border-gray-200 p-3">
+                <p className="text-xs text-gray-500">Price</p>
+                <p className="text-sm font-bold">IDR {event.price}</p>
+              </div>
             </div>
-            <div className="p-3">
-              <p className="truncate lg:text-sm text-xs font-bold text-red-500">
-                {event.category}
-              </p>
-              <h4 className="lg:text-md text-sm text-blue-gray-900 mt-2 truncate font-semibold">
-                {event.title}
-              </h4>
-              <p className="mt-2 truncate lg:text-sm text-xs text-gray-600">
-                {event.city}
-              </p>
-              <p className="mt-2 truncate lg:text-sm text-xs  text-gray-600">
-                {event.date}
-              </p>
-            </div>
-            <div className="flex items-center justify-between border-t-[1px] border-gray-200 p-3">
-              <p className="text-xs text-gray-500">Price</p>
-              <p className="font-bold text-sm">IDR {event.price}</p>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
 
