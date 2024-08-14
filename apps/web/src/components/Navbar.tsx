@@ -110,11 +110,11 @@ const NavbarPage = () => {
                   </Link>
                 ) : (
                   <>
-                    <Button variant="ghost" onClick={handleLoginOpen}>
+                    <Button
+                      className="bg-[#0080ff] hover:bg-[#0066CC]"
+                      onClick={handleLoginOpen}
+                    >
                       <Link href={"#"}>Login</Link>
-                    </Button>
-                    <Button className="bg-[#0080ff] hover:bg-[#0066CC]">
-                      <Link href={"#"}>Get Started</Link>
                     </Button>
                   </>
                 )}
@@ -168,15 +168,13 @@ const NavbarPage = () => {
                   <Button
                     variant="ghost"
                     onClick={handleLoginOpen}
-                    className="w-full"
+                    className="w-full bg-[#0080ff]"
                   >
-                    <Link href={"#"} className="text-center">
-                      Login
-                    </Link>
-                  </Button>
-                  <Button className="w-full bg-[#0080ff] hover:bg-[#0066CC]">
-                    <Link href={"#"} className="text-center">
-                      Get Started
+                    <Link
+                      href={"#"}
+                      className="text-center text-base font-semibold text-white"
+                    >
+                      Sign in
                     </Link>
                   </Button>
                 </>
