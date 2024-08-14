@@ -3,6 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -170,17 +179,87 @@ const eventData = [
   },
 ];
 
-const EventCardLists: React.FC = () => {
+const Events: React.FC = () => {
   const [selectedSort, setSelectedSort] = useState("Newly_added");
   const [showAll, setShowAll] = useState(false);
 
   const eventsToShow = showAll ? eventData : eventData.slice(0, 8);
 
   return (
-    <div className="lg: container relative my-[30px] max-w-7xl px-4 lg:my-[60px] lg:px-0">
-      <p className="mb-4 text-2xl font-semibold">Newly Added Events</p>
+    <div className="mb-6 px-4 lg:container lg:my-[60px] lg:max-w-7xl lg:px-0">
+      <p className="mb-4 text-2xl font-semibold">Events List</p>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+      <div className="mb-6 flex flex-col gap-4 md:flex md:flex-row lg:flex-row lg:gap-6">
+        {/* Sort by */}
+        <div className="flex w-full flex-row gap-4">
+          {" "}
+          <div className="w-full lg:w-fit">
+            <Select
+              value={selectedSort}
+              onValueChange={(value) => setSelectedSort(value)}
+            >
+              <SelectTrigger className="w-full lg:w-[150px]">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Newly_added">Newly Added</SelectItem>
+                  <SelectItem value="closest_date">Closest Date</SelectItem>
+                  <SelectItem value="longest_date">Longest Date</SelectItem>
+                  <SelectItem value="price_low_asc">
+                    Price Low to High
+                  </SelectItem>
+                  <SelectItem value="price_high_dsc">
+                    Price High to Low
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          {/* Category */}
+          <div className="w-full lg:w-fit">
+            <Select
+              value={selectedSort}
+              onValueChange={(value) => setSelectedSort(value)}
+            >
+              <SelectTrigger className="w-full lg:w-[150px]">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="Newly_added">All Events</SelectItem>
+                  <SelectItem value="closest_date">Music</SelectItem>
+                  <SelectItem value="longest_date">Film</SelectItem>
+                  <SelectItem value="price_low_asc">Art</SelectItem>
+                  <SelectItem value="price_high_dsc">Theater</SelectItem>
+                  <SelectItem value="price_high_dsc">Nightlife</SelectItem>
+                  <SelectItem value="price_high_dsc">Sports</SelectItem>
+                  <SelectItem value="price_high_dsc">Dating</SelectItem>
+                  <SelectItem value="price_high_dsc">E-Sports</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        {/* Event Location */}
+        <div className="w-full lg:w-[400px]">
+          <div className="flex w-full items-center space-x-2">
+            <Input
+              type="text"
+              placeholder="Search Location"
+              className="flex-grow"
+            />
+            <Button
+              type="button"
+              className="hidden bg-[#FF8000] hover:bg-[#E67300]"
+            >
+              <FaLocationDot />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-4 lg:gap-6">
         {eventsToShow.map((event) => (
           <Link href={`/events/${event.id}`}>
             <div
@@ -216,17 +295,27 @@ const EventCardLists: React.FC = () => {
           </Link>
         ))}
       </div>
-
+      {/* Pagination */}
       <div className="mt-6 flex justify-center">
-        <Button
-          variant={"outline"}
-          className="border-[#0080ff] text-[#0080ff] hover:border-[#0066CC] hover:bg-[#FFF] hover:text-[#0066CC]"
-        >
-          <Link href={"/events"}>See More Events</Link>
-        </Button>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
 };
 
-export default EventCardLists;
+export default Events;
