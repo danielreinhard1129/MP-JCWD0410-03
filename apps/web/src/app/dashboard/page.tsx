@@ -5,25 +5,25 @@ import React from "react";
 const Dashboard = () => {
   const cards = [
     {
-      title: "Jumlah Tiket Terjual",
+      title: "Total Tiket Terjual",
       value: "1,250",
       icon: "🎫",
       bgColor: "bg-gradient-to-r from-indigo-500 to-blue-600",
     },
     {
-      title: "Jumlah Penjualan",
+      title: "Total Penjualan",
       value: "Rp 75,000,000",
       icon: "💸",
       bgColor: "bg-gradient-to-r from-green-500 to-emerald-700",
     },
     {
-      title: "Jumlah Pengunjung",
+      title: "Total Pengunjung",
       value: "3,450",
       icon: "👥",
       bgColor: "bg-gradient-to-r from-pink-500 to-purple-600",
     },
     {
-      title: "Jumlah Transaksi",
+      title: "Total Transaksi",
       value: "980",
       icon: "💳",
       bgColor: "bg-gradient-to-r from-yellow-500 to-orange-600",
