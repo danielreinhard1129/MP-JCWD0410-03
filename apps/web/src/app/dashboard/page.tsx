@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarDemo } from "@/components/Sidebar";
 import React from "react";
 
 const Dashboard = () => {
@@ -31,18 +32,24 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="bg-gray-900 min-h-screen p-6">
-      <div className="flex flex-wrap justify-center gap-6">
-        {cards.map((card, index) => (
-          <div
-            key={index}
-            className={`${card.bgColor} flex flex-col items-center justify-center w-full sm:w-[48%] md:w-[45%] lg:w-[40%] p-8 rounded-xl shadow-lg text-white transform transition-transform hover:scale-105`}
-          >
-            <div className="text-5xl mb-4">{card.icon}</div>
-            <div className="text-center text-xl font-semibold">{card.title}</div>
-            <div className="text-center text-4xl font-bold">{card.value}</div>
-          </div>
-        ))}
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <SidebarDemo />
+
+      {/* Dashboard Content */}
+      <div className="flex-1 bg-gray-900 p-6">
+        <div className="flex flex-wrap justify-center gap-6">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className={`${card.bgColor} flex flex-col items-center justify-center w-full sm:w-[48%] md:w-[45%] lg:w-[40%] p-8 rounded-xl shadow-lg text-white transform transition-transform hover:scale-105`}
+            >
+              <div className="text-5xl mb-4">{card.icon}</div>
+              <div className="text-center text-xl font-semibold">{card.title}</div>
+              <div className="text-center text-4xl font-bold">{card.value}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
