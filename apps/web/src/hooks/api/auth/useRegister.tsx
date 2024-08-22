@@ -12,7 +12,6 @@ interface RegisterArgs {
   email: string;
   password: string;
   role: Role;
-
 }
 
 const useRegister = () => {
@@ -26,6 +25,7 @@ const useRegister = () => {
         name: payload.name,
         email: payload.email,
         password: payload.password,
+        role: payload.role,
       });
 
       toast("Register Success");
