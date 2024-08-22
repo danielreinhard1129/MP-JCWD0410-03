@@ -2,33 +2,34 @@
 
 import { SidebarDemo } from "@/components/Sidebar";
 import React from "react";
-import { FaCalendarAlt, FaMapMarkerAlt, FaDollarSign, FaTicketAlt, FaTag } from "react-icons/fa";
-
-interface Attendee {
-  name: string;
-  ticketQuantity: number;
-  totalPrice: number;
-}
+import {
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+  FaDollarSign,
+  FaTicketAlt,
+  FaTag,
+} from "react-icons/fa";
 
 const EventTicket = ({ title, date, venue, price, ticketsAvailable }: any) => (
-  <div className="bg-gradient-to-br from-blue-200 to-blue-100 dark:from-blue-800 dark:to-blue-900 border border-blue-300 dark:border-blue-600 shadow-lg rounded-lg p-4 flex flex-col transition-transform transform hover:scale-105">
-    <h3 className="text-xl font-semibold mb-2 text-blue-900 dark:text-blue-200 flex items-center">
-      <FaTag className="mr-2" /> {title}
+  <div className="flex transform flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-lg transition-transform hover:scale-105 hover:shadow-2xl">
+    <h3 className="mb-2 flex items-center text-lg font-semibold text-gray-800">
+      <FaTag className="mr-2 text-blue-500" /> {title}
     </h3>
-    <p className="text-blue-700 dark:text-blue-400 flex items-center">
-      <FaCalendarAlt className="mr-2" /> {date}
+    <p className="mb-1 flex items-center text-gray-600">
+      <FaCalendarAlt className="mr-2 text-blue-400" /> {date}
     </p>
-    <p className="text-blue-700 dark:text-blue-400 flex items-center">
-      <FaMapMarkerAlt className="mr-2" /> {venue}
+    <p className="mb-1 flex items-center text-gray-600">
+      <FaMapMarkerAlt className="mr-2 text-blue-400" /> {venue}
     </p>
-    <p className="text-blue-700 dark:text-blue-400 flex items-center">
-      <FaDollarSign className="mr-2" /> {price}
+    <p className="mb-1 flex items-center text-gray-600">
+      <FaDollarSign className="mr-2 text-blue-400" /> {price}
     </p>
-    <p className="text-blue-700 dark:text-blue-400 flex items-center">
-      <FaTicketAlt className="mr-2" /> Available: {ticketsAvailable}
+    <p className="mb-4 flex items-center text-gray-600">
+      <FaTicketAlt className="mr-2 text-blue-400" /> Available:{" "}
+      {ticketsAvailable}
     </p>
     {ticketsAvailable > 0 && (
-      <button className="mt-auto bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+      <button className="mt-auto rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600">
         Buy Now
       </button>
     )}
@@ -129,14 +130,14 @@ const EventsPage = () => {
   return (
     <div className="flex">
       <SidebarDemo />
-      <main className="p-6 bg-neutral-100 dark:bg-neutral-900 flex-1 h-screen overflow-y-scroll">
-        <h1 className="text-3xl font-semibold mb-4 text-neutral-800 dark:text-neutral-200">
+      <main className="h-screen flex-1 overflow-y-scroll bg-gray-50 p-8">
+        <h1 className="mb-8 text-4xl font-semibold text-gray-800">
           Event Tickets
         </h1>
 
-        <div className="mb-6">
+        <div className="mb-8">
           <button
-            className="bg-green-600 text-white py-2 px-6 rounded-lg hover:bg-green-700 transition-colors"
+            className="rounded-lg bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
             onClick={() => console.log("Create Event button clicked")}
           >
             Create Event
@@ -145,10 +146,10 @@ const EventsPage = () => {
 
         <div className="space-y-12">
           <div>
-            <h2 className="text-2xl font-medium mb-3 text-neutral-700 dark:text-neutral-300">
+            <h2 className="mb-6 text-2xl font-medium text-gray-700">
               Current Event Tickets
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {currentEvents.map((event, index) => (
                 <EventTicket
                   key={index}
@@ -163,10 +164,10 @@ const EventsPage = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-medium mb-3 text-neutral-700 dark:text-neutral-300">
+            <h2 className="mb-6 text-2xl font-medium text-gray-700">
               Past Event Tickets
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {pastEvents.map((event, index) => (
                 <EventTicket
                   key={index}

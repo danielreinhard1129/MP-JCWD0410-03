@@ -14,7 +14,7 @@ interface Transaction {
 
 const Transaction = ({ transaction, onAccept, onReject }: any) => {
   return (
-    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg rounded-lg p-6 transition-all transform hover:scale-105">
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-md rounded-xl p-6 transition-all transform hover:scale-105 hover:shadow-lg">
       <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
         {transaction.title}
       </h3>
@@ -117,13 +117,13 @@ const TransactionsPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       <SidebarDemo />
-      <main className="flex-1 p-6 bg-gray-100 dark:bg-gray-900 h-screen overflow-y-scroll">
-        <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+      <main className="flex-1 p-8">
+        <h1 className="text-4xl font-bold mb-8 text-gray-800">
           Transactions Management
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {transactions.map((transaction) => (
             <Transaction
               key={transaction.id}

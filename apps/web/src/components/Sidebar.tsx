@@ -97,7 +97,7 @@ export const DesktopSidebar = ({
   const { open, setOpen, animate } = useSidebar();
   return (
     <motion.div
-      className={`h-full px-4 py-4 hidden md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 shadow-lg ${className}`}
+      className={`h-full px-4 py-4 hidden md:flex md:flex-col bg-white shadow-lg ${className}`} // Changed bg-neutral-100 to bg-white
       animate={{
         width: animate ? (open ? "300px" : "80px") : "300px",
       }}
@@ -118,11 +118,11 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
   return (
     <div
-      className={`h-16 px-4 py-4 flex md:hidden items-center justify-between bg-neutral-100 dark:bg-neutral-800 shadow-lg ${className}`}
+      className={`h-16 px-4 py-1 flex md:hidden items-center justify-between bg-white shadow-lg ${className}`} // Reduced padding to py-1
       {...props}
     >
       <IconMenu2
-        className="text-neutral-800 dark:text-neutral-200"
+        className="text-neutral-800 dark:text-neutral-200 -mt-2" // Applied negative margin to move the icon up
         onClick={() => setOpen(!open)}
       />
       <AnimatePresence>
@@ -243,23 +243,7 @@ export function SidebarDemo() {
             <SidebarLink key={idx} link={link} />
           ))}
         </div>
-        <div>
-          <SidebarLink
-            link={{
-              label: "Manu Arora",
-              href: "/profile", // Mengarahkan ke halaman profile
-              icon: (
-                <Image
-                  src="https://assets.aceternity.com/manu.png"
-                  className="h-7 w-7 flex-shrink-0 rounded-full"
-                  width={50}
-                  height={50}
-                  alt="Avatar"
-                />
-              ),
-            }}
-          />
-        </div>
+        
       </SidebarBody>
     </Sidebar>
   );
