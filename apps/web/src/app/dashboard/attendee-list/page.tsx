@@ -10,11 +10,17 @@ interface Attendee {
 }
 
 const AttendeeCard = ({ name, ticketQuantity, totalPrice }: any) => (
-  <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 border border-blue-300 dark:border-blue-600 rounded-lg shadow-lg p-6 flex flex-col space-y-4">
-    <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-200">{name}</h3>
+  <div className="flex flex-col space-y-4 rounded-lg border border-blue-300 bg-gradient-to-br from-blue-100 to-blue-200 p-6 shadow-lg dark:border-blue-600 dark:from-blue-800 dark:to-blue-900">
+    <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+      {name}
+    </h3>
     <div className="flex flex-col space-y-2">
-      <p className="text-blue-600 dark:text-blue-400">Tickets: <span className="font-semibold">{ticketQuantity}</span></p>
-      <p className="text-blue-600 dark:text-blue-400">Total Price: <span className="font-semibold">{totalPrice}</span></p>
+      <p className="text-blue-600 dark:text-blue-400">
+        Tickets: <span className="font-semibold">{ticketQuantity}</span>
+      </p>
+      <p className="text-blue-600 dark:text-blue-400">
+        Total Price: <span className="font-semibold">{totalPrice}</span>
+      </p>
     </div>
   </div>
 );
@@ -31,9 +37,11 @@ const AttendeeListPage = () => {
   return (
     <div className="flex">
       <SidebarDemo />
-      <main className="p-6 bg-neutral-100 dark:bg-neutral-900 min-h-screen flex-1 overflow-y-auto">
-        <h1 className="text-3xl font-semibold mb-8 text-neutral-800 dark:text-neutral-200">Attendee List</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <main className="min-h-screen flex-1 overflow-y-auto bg-neutral-100 p-6 dark:bg-neutral-900">
+        <h1 className="mb-8 text-3xl font-semibold text-neutral-800 dark:text-neutral-200">
+          Attendee List
+        </h1>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {attendees.map((attendee) => (
             <AttendeeCard
               key={attendee.id}

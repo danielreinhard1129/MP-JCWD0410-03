@@ -73,7 +73,7 @@ const Statistics: React.FC = () => {
 
   return (
     <div className="flex h-screen">
-      <SidebarDemo open={sidebarOpen} setOpen={setSidebarOpen} />
+      {/* <SidebarDemo open={sidebarOpen} setOpen={setSidebarOpen} /> */}
 
       <main className="flex-1 p-6 bg-gray-100 dark:bg-gray-900 overflow-y-auto">
         <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-6">

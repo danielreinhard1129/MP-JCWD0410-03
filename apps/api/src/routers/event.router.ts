@@ -1,6 +1,4 @@
-import {
-  EventController,
-} from '@/controllers/event.controller';
+import { EventController } from '@/controllers/event.controller';
 import express from 'express';
 import { Router } from 'express';
 
@@ -15,7 +13,8 @@ export class EventRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.get('/', this.eventController.getEvents);
+    this.router.get('/', this.eventController.getEventsController);
+    this.router.get('/:id', this.eventController.getEventController);
   }
 
   getRouter(): Router {

@@ -2,15 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import Pagination from "@/components/Pagination";
 import {
   Select,
   SelectContent,
@@ -20,166 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import axios from "axios";
-import { log } from "console";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import useGetEvent from "@/hooks/api/event/useGetEvent";
+import useGetEvents from "@/hooks/api/event/useGetEvents";
+import { Loader2 } from "lucide-react";
 
-// const eventData = [
-//   {
-//     id: 1,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 2,
-//     category: "Art",
-//     image:
-//       "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F332764309%2F153745516453%2F1%2Foriginal.20220810-022309?w=512&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2160%2C1080&s=a16a1e3b7cc7c38640e4bcc44ac6db80",
-//     title: "Ramayana Purawisata",
-//     city: "Yogyakarta",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 3,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/d27f091ed6f51f323b2e20e8157034983b0f0333.png",
-//     title: "Spirit 58 SMADA",
-//     city: "Yogyakarta",
-//     date: "8-12 September 2024",
-//     price: "135.000",
-//   },
-//   {
-//     id: 4,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/317f68f2242d7ec4365d7e1dbd1f924ff4b69072.png",
-//     title: "Giginitify X BCA",
-//     city: "Jakarta",
-//     date: "24 August 2024",
-//     price: "450.000",
-//   },
-//   {
-//     id: 5,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/98bb5dc6c14848e52ded72c2e22c2b5cb8143c4c.png",
-//     title: "Nusantarock",
-//     city: "Yogyakarta",
-//     date: "12-15 October 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 6,
-//     category: "Music",
-//     image:
-//       "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
-//     title: "Heritage 90's Concert",
-//     city: "Bali",
-//     date: "01 November 2024",
-//     price: "850.000",
-//   },
-//   {
-//     id: 7,
-//     category: "Music",
-//     image:
-//       "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
-//     title: "Heritage 90's Concert",
-//     city: "Bali",
-//     date: "01 November 2024",
-//     price: "850.000",
-//   },
-//   {
-//     id: 8,
-//     category: "Music",
-//     image:
-//       "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
-//     title: "Heritage 90's Concert",
-//     city: "Bali",
-//     date: "01 November 2024",
-//     price: "850.000",
-//   },
-//   {
-//     id: 9,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 10,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 11,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 12,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 13,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/c0faa7e4668eba9cbcc54c9f651dbc3038e39aed.png",
-//     title: "Pemsi Music Fest 2024",
-//     city: "Nusa Tenggara Timur",
-//     date: "12-15 August 2024",
-//     price: "50.000",
-//   },
-//   {
-//     id: 14,
-//     category: "Music",
-//     image:
-//       "https://assets.loket.com/neo/production/images/banner/20240503020209.png",
-//     title: "Heritage 90's Concert",
-//     city: "Bali",
-//     date: "01 November 2024",
-//     price: "850.000",
-//   },
-//   {
-//     id: 15,
-//     category: "Music",
-//     image:
-//       "https://api.yesplis.com/images/banner/98bb5dc6c14848e52ded72c2e22c2b5cb8143c4c.png",
-//     title: "Nusantarock",
-//     city: "Yogyakarta",
-//     date: "12-15 October 2024",
-//     price: "50.000",
-//   },
-// ];
 
 interface Event {
   id: number;
@@ -201,28 +43,25 @@ interface Event {
 const EventListCards: React.FC = () => {
   const [selectedSort, setSelectedSort] = useState("Newly_added");
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [showAll, setShowAll] = useState(false);
-  const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/event");
-        console.log(response.data);
-        setEvents(response.data);
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isPending } = useGetEvents({
+    page,
+    take: 5,
+  });
 
-    fetchEvents();
-  }, []);
 
-  const eventsToShow = showAll ? events : events.slice(0, 8);
+  const onPageChange = ({ selected }: { selected: number }) => {
+    setPage(selected + 1);
+  };
 
-  if (loading) return <p>Loading...</p>;
+  if (isPending) {
+    return <Loader2 className="mx-auto animate-spin" />;
+  }
+
+  if (!data) {
+    return <h1 className="text-center">Event tidak ditemukan</h1>;
+  }
 
   return (
     <div className="mb-6 px-4 lg:container lg:my-[60px] lg:max-w-7xl lg:px-0">
@@ -298,7 +137,7 @@ const EventListCards: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-        {eventsToShow.map((event) => (
+        {data.data.map((event: any) => (
           <Link href={`/events/${event.id}`} key={event.id}>
             <div className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm">
               <div className="m-0 rounded-none">
@@ -330,24 +169,15 @@ const EventListCards: React.FC = () => {
           </Link>
         ))}
       </div>
+
       {/* Pagination */}
       <div className="mt-6 flex justify-center">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <Pagination
+          total={data.meta.total || 0}
+          take={data.meta.take||0}
+          onPageChange={onPageChange}
+          page={page}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { FC, useState } from "react";
 import { FaCaretRight } from "react-icons/fa";
 
 const instructionData = [
@@ -73,7 +75,20 @@ const TicketCounter = () => {
   );
 };
 
-const DescDetail = () => {
+export interface DescDetailProps {
+  description: string;
+  eventId: number;
+}
+
+const DescDetail: React.FC<DescDetailProps> = ({ description, eventId }) => {
+  const router = useRouter();
+
+  const handleCheckout = () => {
+    //Logic create checkout
+
+    router.push(`/checkout/${eventId}`); //replace one with response from logic create checkout
+  };
+
   return (
     <div>
       <div className="container mt-[30px] px-6 lg:container lg:flex lg:max-w-7xl lg:flex-row lg:justify-between lg:px-0">
@@ -85,35 +100,7 @@ const DescDetail = () => {
               <p className="text-base font-semibold">Description</p>
             </div>
             <div className="flex flex-col gap-6">
-              <p className="text-md w-full text-gray-600">
-                Pemsi Fest 2024 siap menjadi ajang musik paling dinanti tahun
-                ini! Acara ini akan menghadirkan deretan artis terbaik
-                Indonesia, dan yang paling ditunggu-tunggu adalah penampilan
-                dari Lyodra, sang diva muda yang telah memukau banyak penggemar
-                dengan suara emasnya.
-              </p>
-              <p className="text-md w-full text-gray-600">
-                Lyodra, yang dikenal melalui kemenangan di ajang pencarian
-                bakat, telah membuktikan dirinya sebagai salah satu penyanyi
-                paling berbakat di tanah air. Dengan berbagai hits seperti
-                "Pesan Terakhir" dan "Kalau Bosan", penampilannya di Pemsi Fest
-                2024 dipastikan akan menjadi momen yang tidak boleh dilewatkan.
-              </p>
-
-              <p className="text-md w-full text-gray-600">
-                Pemsi Fest 2024 akan digelar dengan suasana yang lebih meriah,
-                lebih besar, dan lebih spektakuler dibandingkan tahun-tahun
-                sebelumnya. Selain Lyodra, berbagai musisi top lainnya juga akan
-                turut memeriahkan acara ini, menjadikan Pemsi Fest 2024 sebagai
-                festival musik yang menawarkan pengalaman tak terlupakan bagi
-                semua penikmat musik.
-              </p>
-
-              <p className="text-md w-full text-gray-600">
-                Jangan lewatkan kesempatan untuk menjadi bagian dari euforia
-                ini! Segera dapatkan tiket Anda dan saksikan langsung penampilan
-                memukau dari Lyodra dan artis lainnya di Pemsi Fest 2024!
-              </p>
+              <p className="text-md w-full text-gray-600">{description}</p>
             </div>
           </div>
           {/* Terms and Conditions */}
@@ -150,33 +137,23 @@ const DescDetail = () => {
         </div>
         {/* sticky button */}
         <div className="hidden lg:block">
-          <div className="lg:sticky lg:top-[95px] lg:flex lg:w-[400px] lg:flex-col lg:rounded-xl lg:border-[1.5px] lg:px-5 lg:py-8 lg:shadow-md lg:gap-6">
-            <div className="flex flex-row justify-between">
-              <div>
-                <p className="text-xs">Price</p>
-                <p className="text-xl font-semibold">IDR. 50.000</p>
-              </div>
-              <div>
-                <TicketCounter />
-              </div>
-            </div>
-            <Button className="w-full bg-[#0080ff]">Buy Ticket</Button>
+          <div className="lg:sticky lg:top-[95px] lg:flex lg:w-[400px] lg:flex-col lg:gap-6 lg:rounded-xl lg:border-[1.5px] lg:px-5 lg:py-8 lg:shadow-md">
+            <Button
+              className="w-full bg-[#0080ff] hover:bg-[#0066CC]"
+              onClick={handleCheckout}
+            >
+              Buy Ticket
+            </Button>
           </div>
         </div>
       </div>
 
       {/* FAB Mobile */}
       <div className="fixed bottom-0 flex w-full flex-col justify-center gap-6 border-t-[1.5px] border-gray-200 bg-white px-6 py-4 lg:hidden">
-        <div className="flex flex-row justify-between">
-          <div>
-            <p className="text-xs">Price</p>
-            <p className="text-md font-semibold">IDR. 50.000</p>
-          </div>
-          <div>
-            <TicketCounter />
-          </div>
-        </div>
-        <Button className="w-full bg-[#0080ff] md:h-[55px] md:text-lg md:font-semibold">
+        <Button
+          className="w-full bg-[#0080ff] md:h-[55px] md:text-lg md:font-semibold"
+          onClick={handleCheckout}
+        >
           Buy Ticket
         </Button>
       </div>

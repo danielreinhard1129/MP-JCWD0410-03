@@ -20,7 +20,7 @@ const images = [
 
 export default function JumbotronSlider() {
   return (
-    <div className="relative p-6 lg:mt-[40px]" >
+    <div className="relative p-6 lg:mt-[40px]">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -29,7 +29,7 @@ export default function JumbotronSlider() {
           disableOnInteraction: false,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper my-[30px] h-[200px] lg:my-[0px] lg:h-[350px] lg:max-w-7xl lg:rounded-lg rounded-lg"
+        className="mySwiper my-[30px] h-[200px] rounded-lg lg:my-[0px] lg:h-[350px] lg:max-w-7xl lg:rounded-lg"
         loop={true}
       >
         {images.map((image, index) => (
@@ -37,7 +37,7 @@ export default function JumbotronSlider() {
             <img
               src={image}
               alt={`Slide ${index}`}
-              className="absolute inset-0 h-full lg:w-full"
+              className="absolute inset-0 h-full w-full object-fill"
             />
           </SwiperSlide>
         ))}

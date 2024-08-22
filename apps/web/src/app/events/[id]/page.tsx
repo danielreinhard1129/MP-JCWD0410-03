@@ -1,10 +1,10 @@
-import EventDetailPage from "@/features/event";
+import EventDetailPage from "@/features/event-detail";
 import React from "react";
 
-const eventDetail = () => {
+const eventDetail = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <EventDetailPage />
+      <EventDetailPage eventId={Number(params.id)} />
     </div>
   );
 };

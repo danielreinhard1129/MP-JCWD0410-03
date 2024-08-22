@@ -8,7 +8,7 @@ import useLogin from "@/hooks/api/auth/useLogin";
 import { useFormik } from "formik";
 import Link from "next/link";
 import React from "react";
-import { LoginSchema } from "../schemas/loginschema";
+import { LoginSchema } from "../schemas/loginSchema";
 
 const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
