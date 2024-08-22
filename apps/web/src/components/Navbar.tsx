@@ -1,14 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useAppSelector } from "@/redux/hooks";
-import { Avatar } from "@radix-ui/react-avatar";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
-import { AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Input } from "./ui/input";
 import LoginModal from "@/features/login/components/LoginModal";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
+import { logoutAction } from "@/redux/slices/userSlice";
 import AsyncSelect from "react-select/dist/declarations/src/Async";
 import Autocomplete from "./Autocomplete";
 
@@ -20,14 +21,20 @@ const navigation = [
 
 const NavbarPage = () => {
   const { id } = useAppSelector((state) => state.user);
+  const router = useRouter();
 
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAvatarHovered, setIsAvatarHovered] = useState(false);
+
+  const avatarTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleLoginOpen = () => setIsLoginOpen(true);
   const handleLoginClose = () => setIsLoginOpen(false);
   const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +45,25 @@ const NavbarPage = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleAvatarMouseEnter = () => {
+    if (avatarTimeoutRef.current) {
+      clearTimeout(avatarTimeoutRef.current);
+    }
+    setIsAvatarHovered(true);
+  };
+
+  const handleAvatarMouseLeave = () => {
+    avatarTimeoutRef.current = setTimeout(() => {
+      setIsAvatarHovered(false);
+    }, 200);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutAction())
+
+    router.push("/");
+  };
 
   return (
     <>
@@ -82,22 +108,41 @@ const NavbarPage = () => {
                   </Button>
                 ))}
                 {id ? (
-                  <Link href="/profile">
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>RM</AvatarFallback>
-                    </Avatar>
-                  </Link>
+                  <div
+                    className="relative"
+                    onMouseEnter={handleAvatarMouseEnter}
+                    onMouseLeave={handleAvatarMouseLeave}
+                  >
+                    <Link href="/profile">
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="@shadcn"
+                        />
+                        <AvatarFallback>RM</AvatarFallback>
+                      </Avatar>
+                    </Link>
+                    {isAvatarHovered && (
+                      <div className="absolute right-0 z-50 mt-2 w-40 rounded-lg bg-white p-2 shadow-lg">
+                        <Link href="/profile">
+                          <Button className="mb-2 w-full">Profile</Button>
+                        </Link>
+                        <Button
+                          className="w-full bg-red-500 hover:bg-red-600"
+                          onClick={handleLogout}
+                        >
+                          Log Out
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <>
                     <Button
                       className="bg-[#0080ff] hover:bg-[#0066CC]"
                       onClick={handleLoginOpen}
                     >
-                      <Link href={"#"}>Login</Link>
+                      Log in
                     </Button>
                   </>
                 )}
@@ -123,29 +168,29 @@ const NavbarPage = () => {
 
             <div className="flex flex-col space-y-4">
               {navigation.map((item) => (
-                <Button
-                  key={item.name}
-                  variant="link"
-                  className="text-md text-gray-700 hover:text-gray-900 lg:text-xl"
-                >
-                  <Link href={item.href}>
+                <Link key={item.name} href={item.href}>
+                  <Button
+                    key={item.name}
+                    variant="link"
+                    className="text-md text-gray-700 hover:text-gray-900 lg:text-xl"
+                  >
                     <span>{item.name}</span>
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               ))}
               {id ? (
-                <Link href="/profile">
-                  <div className="flex items-center space-x-2">
-                    <Avatar>
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>RM</AvatarFallback>
-                    </Avatar>
+                <div className="flex items-center space-x-2">
+                  <Avatar>
+                    <AvatarImage
+                      src="https://github.com/shadcn.png"
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>RM</AvatarFallback>
+                  </Avatar>
+                  <Link href="/profile">
                     <span className="text-lg">Profile</span>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               ) : (
                 <>
                   <Button
@@ -153,12 +198,7 @@ const NavbarPage = () => {
                     onClick={handleLoginOpen}
                     className="w-full bg-[#0080ff]"
                   >
-                    <Link
-                      href={"#"}
-                      className="text-center text-base font-semibold text-white"
-                    >
-                      Sign in
-                    </Link>
+                    Sign in
                   </Button>
                 </>
               )}

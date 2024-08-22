@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
-import NavbarPage from "@/components/Navbar";
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from "@/components/Footer";
 import StoreProvider from "@/lib/providers/StoreProvider";
 import { useRouter } from "next/navigation";
 import ReactQuerryProviders from "@/lib/providers/ReactQuerryProvider";
 import { ToastContainer } from "react-toastify";
+import dynamic from "next/dynamic";
+
+const NavbarPage = dynamic(() => import("@/components/Navbar"), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,9 +31,9 @@ export default function RootLayout({
             <NavbarPage />
             {children}
             <Footer />
+        <ToastContainer />
           </ReactQuerryProviders>
         </StoreProvider>
-        <ToastContainer />
       </body>
     </html>
   );

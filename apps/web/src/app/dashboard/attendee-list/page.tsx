@@ -15,11 +15,11 @@ const AttendeeCard = ({ name, ticketQuantity, totalPrice }: any) => (
       {name}
     </h3>
     <div className="flex flex-col space-y-2">
-      <p className="text-blue-600 dark:text-blue-400">
-        Tickets: <span className="font-semibold">{ticketQuantity}</span>
+      <p className="text-gray-600">
+        Tickets: <span className="font-semibold text-gray-800">{ticketQuantity}</span>
       </p>
-      <p className="text-blue-600 dark:text-blue-400">
-        Total Price: <span className="font-semibold">{totalPrice}</span>
+      <p className="text-gray-600">
+        Total Price: <span className="font-semibold text-gray-800">{totalPrice}</span>
       </p>
     </div>
   </div>
@@ -35,13 +35,13 @@ const AttendeeListPage = () => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <SidebarDemo />
-      <main className="min-h-screen flex-1 overflow-y-auto bg-neutral-100 p-6 dark:bg-neutral-900">
-        <h1 className="mb-8 text-3xl font-semibold text-neutral-800 dark:text-neutral-200">
+      <main className="flex-1 p-8 bg-gray-50 h-screen overflow-y-scroll">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">
           Attendee List
         </h1>
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {attendees.map((attendee) => (
             <AttendeeCard
               key={attendee.id}

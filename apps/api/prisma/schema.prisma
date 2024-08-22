@@ -17,7 +17,7 @@ model Sample {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("samples") // if you want to use snake_case format
+  @@map("samples")
 }
 
 model Event {
@@ -54,7 +54,7 @@ model User {
   phone_number   String?
   role           Role     @default(CUSTOMERS)
   password       String
-  referal_number String
+  referal_number String   @unique
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -75,13 +75,13 @@ enum Role {
 }
 
 model UserPoint {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   points       Int
-  expired_date DateTime
+  expired_date DateTime?
   userId       Int
-  user         User     @relation(fields: [userId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  user         User      @relation(fields: [userId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@map("user_points")
 }
@@ -195,7 +195,7 @@ model Reward {
   description String       @db.LongText
   discount    Int
   quota       Int
-  claimed     Boolean
+  claimed     Int
   expiredDate DateTime
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
