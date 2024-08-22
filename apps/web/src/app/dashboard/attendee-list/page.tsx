@@ -10,8 +10,10 @@ interface Attendee {
 }
 
 const AttendeeCard = ({ name, ticketQuantity, totalPrice }: any) => (
-  <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 flex flex-col space-y-4 transition-transform transform hover:scale-105 hover:shadow-xl">
-    <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
+  <div className="flex flex-col space-y-4 rounded-lg border border-blue-300 bg-gradient-to-br from-blue-100 to-blue-200 p-6 shadow-lg dark:border-blue-600 dark:from-blue-800 dark:to-blue-900">
+    <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+      {name}
+    </h3>
     <div className="flex flex-col space-y-2">
       <p className="text-gray-600">
         Tickets: <span className="font-semibold text-gray-800">{ticketQuantity}</span>

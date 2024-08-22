@@ -10,10 +10,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 import { logoutAction } from "@/redux/slices/userSlice";
+import AsyncSelect from "react-select/dist/declarations/src/Async";
+import Autocomplete from "./Autocomplete";
 
 const navigation = [
   { name: "Browse Events", href: "/events" },
-  { name: "Create Events", href: "/help" },
+  { name: "Create Events", href: "#" },
   { name: "About Us", href: "/about" },
 ];
 
@@ -87,30 +89,11 @@ const NavbarPage = () => {
             </button>
           </div>
 
-          {/* Mobile Search Input */}
-          <div className="mt-6 w-full lg:hidden">
-            <Input
-              type="search"
-              placeholder="Search events"
-              className="w-full"
-            />
-          </div>
-
           {/* Search Bar and Desktop Menu */}
           <div className="mt-4 flex w-full flex-col items-center md:mt-0 md:flex-row md:justify-between">
             <div className="flex items-center lg:flex lg:w-full lg:flex-row lg:justify-between lg:gap-10">
-              <div className="lg:flex lg:flex-row lg:gap-2">
-                <Input
-                  type="search"
-                  placeholder="Search events"
-                  className="hidden flex-grow lg:block lg:w-[450px]"
-                />
-                <Button
-                  type="submit"
-                  className="hidden bg-[#0080ff] hover:bg-[#0066CC] lg:block"
-                >
-                  <FaSearch />
-                </Button>
+              <div className="w-full lg:flex lg:flex-row lg:gap-2">
+                <Autocomplete/>
               </div>
               <div className="hidden lg:flex lg:gap-4">
                 {navigation.map((item) => (
