@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from "@/components/Footer";
 import StoreProvider from "@/lib/providers/StoreProvider";
 import { useRouter } from "next/navigation";
@@ -31,9 +31,9 @@ export default function RootLayout({
             <NavbarPage />
             {children}
             <Footer />
+        <ToastContainer />
           </ReactQuerryProviders>
         </StoreProvider>
-        <ToastContainer />
       </body>
     </html>
   );
