@@ -1,6 +1,5 @@
 "use client";
 
-import Modal from "@/components/Modal"; // Pastikan path ini benar sesuai struktur proyekmu
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,7 +7,8 @@ import useLogin from "@/hooks/api/auth/useLogin";
 import { useFormik } from "formik";
 import Link from "next/link";
 import React from "react";
-import { LoginSchema } from "../schemas/loginschema";
+import { LoginSchema } from "../schemas/loginSchema";
+import Modal from "@/components/Modal";
 
 const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
@@ -71,16 +71,16 @@ const LoginModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
         </Link>
         {/* ditaro disini */}
         {/* ini maksudnya kalau loading nanti buttonnya akan ke disable */}
-        <Button
-          className="mt-4 w-full bg-[#0080ff] hover:bg-[#0066CC]"
-          disabled={isPending}
-        >
-          <div className="text-lg font-semibold">
+        <div className="text-lg font-semibold">
+          <Button
+            className="mt-4 w-full bg-[#0080ff] hover:bg-[#0066CC]"
+            disabled={isPending}
+          >
             {isPending ? "Loading..." : "Submit"}
-          </div>
-        </Button>
+          </Button>
+        </div>
         <Link
-          href="#"
+          href="/register"
           className="mt-5 flex justify-center text-xs text-gray-500 hover:text-black"
         >
           Dont have Ronmes Account? Register here

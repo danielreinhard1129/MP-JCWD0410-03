@@ -10,11 +10,15 @@ interface Attendee {
 }
 
 const AttendeeCard = ({ name, ticketQuantity, totalPrice }: any) => (
-  <div className="bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800 dark:to-blue-900 border border-blue-300 dark:border-blue-600 rounded-lg shadow-lg p-6 flex flex-col space-y-4">
-    <h3 className="text-2xl font-bold text-blue-800 dark:text-blue-200">{name}</h3>
+  <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 flex flex-col space-y-4 transition-transform transform hover:scale-105 hover:shadow-xl">
+    <h3 className="text-xl font-semibold text-gray-800">{name}</h3>
     <div className="flex flex-col space-y-2">
-      <p className="text-blue-600 dark:text-blue-400">Tickets: <span className="font-semibold">{ticketQuantity}</span></p>
-      <p className="text-blue-600 dark:text-blue-400">Total Price: <span className="font-semibold">{totalPrice}</span></p>
+      <p className="text-gray-600">
+        Tickets: <span className="font-semibold text-gray-800">{ticketQuantity}</span>
+      </p>
+      <p className="text-gray-600">
+        Total Price: <span className="font-semibold text-gray-800">{totalPrice}</span>
+      </p>
     </div>
   </div>
 );
@@ -29,11 +33,13 @@ const AttendeeListPage = () => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <SidebarDemo />
-      <main className="p-6 bg-neutral-100 dark:bg-neutral-900 min-h-screen flex-1 overflow-y-auto">
-        <h1 className="text-3xl font-semibold mb-8 text-neutral-800 dark:text-neutral-200">Attendee List</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <main className="flex-1 p-8 bg-gray-50 h-screen overflow-y-scroll">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">
+          Attendee List
+        </h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {attendees.map((attendee) => (
             <AttendeeCard
               key={attendee.id}

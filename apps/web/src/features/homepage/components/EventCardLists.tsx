@@ -1,18 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaLocationDot } from "react-icons/fa6";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -182,11 +172,8 @@ const EventCardLists: React.FC = () => {
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {eventsToShow.map((event) => (
-          <Link href={`/events/${event.id}`}>
-            <div
-              className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm"
-              key={event.id}
-            >
+          <Link key={event.id} href={`/events/${event.id}`}>
+            <div className="w-full cursor-pointer overflow-hidden rounded-lg border border-gray-200 hover:shadow-sm">
               <div className="m-0 rounded-none">
                 <img
                   src={event.image}
@@ -218,12 +205,14 @@ const EventCardLists: React.FC = () => {
       </div>
 
       <div className="mt-6 flex justify-center">
-        <Button
-          variant={"outline"}
-          className="border-[#0080ff] text-[#0080ff] hover:border-[#0066CC] hover:bg-[#FFF] hover:text-[#0066CC]"
-        >
-          <Link href={"/events"}>See More Events</Link>
-        </Button>
+        <Link href={"/events"}>
+          <Button
+            variant={"outline"}
+            className="border-[#0080ff] text-[#0080ff] hover:border-[#0066CC] hover:bg-[#FFF] hover:text-[#0066CC]"
+          >
+            See More Events
+          </Button>
+        </Link>
       </div>
     </div>
   );

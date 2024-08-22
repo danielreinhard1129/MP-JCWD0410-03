@@ -16,17 +16,16 @@ interface LoginPayload {
 const useLogin = () => {
   const { axiosInstance } = useAxios();
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: async (payload: LoginPayload) => {
       const { data } = await axiosInstance.post("/auth/login", payload);
+
       return data;
     },
     onSuccess: (data) => {
       dispatch(loginAction(data));
       toast.success("Login Success");
-      router.replace("/");
     },
     onError: (error: AxiosError<any>) => {
       toast.error(error.response?.data);
