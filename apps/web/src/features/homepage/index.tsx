@@ -8,10 +8,10 @@ import EventCardLists from "./components/EventCardLists";
 const Homepage = () => {
   return (
     <main>
-      {/* <JumbotronLanding />
+      <JumbotronLanding />
       <JumbotronSlider />
       <EventTrendingCards />
-      <Categories /> */}
+      <Categories />
       <EventCardLists />
     </main>
   );
