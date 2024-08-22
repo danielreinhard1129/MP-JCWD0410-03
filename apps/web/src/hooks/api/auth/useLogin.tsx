@@ -14,6 +14,7 @@ interface LoginPayload {
 }
 
 const useLogin = () => {
+  const router = useRouter();
   const { axiosInstance } = useAxios();
   const dispatch = useAppDispatch();
 
@@ -26,6 +27,9 @@ const useLogin = () => {
     onSuccess: (data) => {
       dispatch(loginAction(data));
       toast.success("Login Success");
+      console.log(data);
+
+      router.push(data.role === "ORGANIZERS" ? "/dashboard" : "/");
     },
     onError: (error: AxiosError<any>) => {
       toast.error(error.response?.data);

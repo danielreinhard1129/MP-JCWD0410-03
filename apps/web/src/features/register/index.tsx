@@ -4,19 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormik } from "formik";
-import { RegisterSchema } from "./schemas/RegisterSchema";
 import useRegister from "@/hooks/api/auth/useRegister";
 import { Role } from "@/types/user";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
+import { RegisterSchema } from "./schemas/RegisterSchema";
 
 const RegisterPage = () => {
   const { register, isLoading } = useRegister();
+  
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       password: "",
-      referralCode: "", // Added referralCode field
+      referralCode: "",
       role: Role.CUSTOMERS,
     },
     validationSchema: RegisterSchema,
@@ -78,7 +80,6 @@ const RegisterPage = () => {
                   </p>
                 ) : null}
               </div>
-              {/* New Referral Code Field */}
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="referralCode">Referral Code</Label>
                 <Input
@@ -89,7 +90,8 @@ const RegisterPage = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {!!formik.touched.referralCode && !!formik.errors.referralCode ? (
+                {!!formik.touched.referralCode &&
+                !!formik.errors.referralCode ? (
                   <p className="text-xs text-red-500">
                     {formik.errors.referralCode}
                   </p>
@@ -102,10 +104,10 @@ const RegisterPage = () => {
                   value={formik.values.role}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="border rounded-md p-2"
+                  className="rounded-md border p-2"
                 >
-                  <option value="CUSTOMERS">Customers</option>
-                  <option value="EVENT_ORGANIZER">Event Organizer</option>
+                  <option value={Role.CUSTOMERS}>Customers</option>
+                  <option value={Role.ORGANIZERS}>Event Organizer</option>
                 </select>
                 {!!formik.touched.role && !!formik.errors.role ? (
                   <p className="text-xs text-red-500">{formik.errors.role}</p>
