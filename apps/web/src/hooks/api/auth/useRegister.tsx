@@ -30,7 +30,7 @@ const useRegister = () => {
 
       toast("Register Success");
 
-      router.push("/login");
+      router.push("/");
     } catch (error) {
       console.log(error);
 
