@@ -78,7 +78,7 @@ model UserPoint {
   id           Int       @id @default(autoincrement())
   points       Int
   expired_date DateTime?
-  userId       Int
+  userId       Int       @unique
   user         User      @relation(fields: [userId], references: [id])
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt

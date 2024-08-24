@@ -1,6 +1,7 @@
 import { hashPassword } from '@/lib/bcrypt';
 import prisma from '@/prisma';
 import { User } from '@prisma/client';
+import { addMonths } from 'date-fns';
 import { nanoid } from 'nanoid';
 
 export const registerService = async (body: User) => {
@@ -49,13 +50,17 @@ export const registerService = async (body: User) => {
       },
     });
 
+    const currentDate = new Date();
+    const expiredPlusThreeMonths = addMonths(currentDate, 3);
+
     if (referredUser) {
       await prisma.userPoint.update({
-        where: { id: referredUser.user_points[0].id },
+        where: { userId: referredUser.id },
         data: {
           points: {
-            increment: 10000,
+            increment: 10000, 
           },
+          expired_date: expiredPlusThreeMonths,
         },
       });
 

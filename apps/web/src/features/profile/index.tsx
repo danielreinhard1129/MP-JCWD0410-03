@@ -4,38 +4,43 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import useRegister from "@/hooks/api/auth/useRegister";
-import { Role } from "@/types/user";
 import { useFormik } from "formik";
+import { FC } from "react";
 import { useRouter } from "next/navigation";
-import { RegisterSchema } from "./schemas/RegisterSchema";
+import { ProfileSchema } from "./schemas/ProfileSchema";
+import useUpdateProfile from "@/hooks/api/profile/useUpdateProfile";
+import { useAppSelector } from "@/redux/hooks";
 
-const RegisterPage = () => {
-  const { register, isLoading } = useRegister();
+const ProfilePage: FC = () => {
+  const router = useRouter();
+  const { id } = useAppSelector((state) => state.user);
+  const { mutateAsync, isPending } = useUpdateProfile(id);
 
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
-      password: "",
-      referal_number: "",
-      role: Role.CUSTOMERS,
+      address: "",
+      phone_number: "",
+      image: null,
     },
-    validationSchema: RegisterSchema,
+    validationSchema: ProfileSchema,
     onSubmit: async (values) => {
-      await register(values);
+      await mutateAsync(values);
+      router.push("/");
     },
   });
 
   return (
     <main className="flex justify-center pt-20">
-      <Card className="w-[350px]">
+      <Card className="w-[400px]">
         <CardHeader>
-          <CardTitle>Sign up</CardTitle>
+          <CardTitle>Update Profile</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={formik.handleSubmit}>
             <div className="grid w-full items-center gap-4">
+              {/* Name Field */}
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -50,6 +55,8 @@ const RegisterPage = () => {
                   <p className="text-xs text-red-500">{formik.errors.name}</p>
                 ) : null}
               </div>
+
+              {/* Email Field */}
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -64,58 +71,65 @@ const RegisterPage = () => {
                   <p className="text-xs text-red-500">{formik.errors.email}</p>
                 ) : null}
               </div>
+
+              {/* Address Field */}
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="address">Address</Label>
                 <Input
-                  name="password"
-                  type="password"
-                  placeholder="Your password"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {!!formik.touched.password && !!formik.errors.password ? (
-                  <p className="text-xs text-red-500">
-                    {formik.errors.password}
-                  </p>
-                ) : null}
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="referal_number">Referral Code</Label>
-                <Input
-                  name="referal_number"
+                  name="address"
                   type="text"
-                  placeholder="Enter referral code (optional)"
-                  value={formik.values.referal_number}
+                  placeholder="Your address"
+                  value={formik.values.address}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {!!formik.touched.referal_number &&
-                !!formik.errors.referal_number ? (
+                {!!formik.touched.address && !!formik.errors.address ? (
                   <p className="text-xs text-red-500">
-                    {formik.errors.referal_number}
+                    {formik.errors.address}
                   </p>
                 ) : null}
               </div>
+
+              {/* Phone Number Field */}
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="role">Role</Label>
-                <select
-                  name="role"
-                  value={formik.values.role}
+                <Label htmlFor="phone_number">Phone Number</Label>
+                <Input
+                  name="phone_number"
+                  type="text"
+                  placeholder="Your phone number"
+                  value={formik.values.phone_number}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className="rounded-md border p-2"
-                >
-                  <option value={Role.CUSTOMERS}>Customers</option>
-                  <option value={Role.ORGANIZERS}>Event Organizer</option>
-                </select>
-                {!!formik.touched.role && !!formik.errors.role ? (
-                  <p className="text-xs text-red-500">{formik.errors.role}</p>
+                />
+                {!!formik.touched.phone_number &&
+                !!formik.errors.phone_number ? (
+                  <p className="text-xs text-red-500">
+                    {formik.errors.phone_number}
+                  </p>
+                ) : null}
+              </div>
+
+              {/* Image Field */}
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="image">Image URL</Label>
+                <Input
+                  className="cursor-pointer"
+                  name="image"
+                  type="file"
+                  onChange={(event) => {
+                    const file = event.currentTarget.files?.[0];
+                    formik.setFieldValue("image", file);
+                  }}
+                  onBlur={formik.handleBlur}
+                />
+                {!!formik.touched.image && !!formik.errors.image ? (
+                  <p className="text-xs text-red-500">{formik.errors.image}</p>
                 ) : null}
               </div>
             </div>
-            <Button className="mt-6 w-full" disabled={isLoading}>
-              {isLoading ? "loading..." : "Submit"}
+
+            <Button className="mt-6 w-full" disabled={isPending}>
+              {isPending ? "Loading..." : "Submit"}
             </Button>
           </form>
         </CardContent>
@@ -124,4 +138,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ProfilePage;
