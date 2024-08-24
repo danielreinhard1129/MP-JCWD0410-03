@@ -7,7 +7,7 @@ export class EventController {
   async getEventsController(req: Request, res: Response, next: NextFunction) {
     try {
       const query = {
-        take: parseInt(req.query.take as string) || 4, //ubah jadi 8 kalau datanya udah lebih dari 8
+        take: parseInt(req.query.take as string) || 4,
         page: parseInt(req.query.page as string) || 1,
         sortBy: (req.query.sortBy as string) || 'createdAt',
         sortOrder: (req.query.sortOrder as string) || 'desc',

@@ -21,9 +21,3 @@ export class EventRouter {
     return this.router;
   }
 }
-
-//urutannya
-// 1. Service
-// 2. Controller
-// 3. router
-// 4. App / index

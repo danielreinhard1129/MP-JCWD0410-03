@@ -55,8 +55,16 @@ export const userSlice = createSlice({
       state.provider = null;
       state.token = "";
     },
+    updateProfileAction: (state, action: PayloadAction<Partial<UserState>>) => {
+      const { name, email, image, address, phone } = action.payload;
+      if (name !== undefined) state.name = name;
+      if (email !== undefined) state.email = email;
+      if (image !== undefined) state.image = image;
+      if (address !== undefined) state.address = address;
+      if (phone !== undefined) state.phone = phone;
+    },
   },
 });
 
-export const { loginAction, logoutAction } = userSlice.actions;
+export const { loginAction, logoutAction, updateProfileAction } = userSlice.actions;
 export default userSlice.reducer;
