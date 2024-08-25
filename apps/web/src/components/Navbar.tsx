@@ -34,7 +34,7 @@ const NavbarPage = () => {
   const handleLoginClose = () => setIsLoginOpen(false);
   const handleMenuToggle = () => setIsMenuOpen(!isMenuOpen);
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +60,7 @@ const NavbarPage = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutAction())
+    dispatch(logoutAction());
 
     router.push("/");
   };
@@ -93,7 +93,7 @@ const NavbarPage = () => {
           <div className="mt-4 flex w-full flex-col items-center md:mt-0 md:flex-row md:justify-between">
             <div className="flex items-center lg:flex lg:w-full lg:flex-row lg:justify-between lg:gap-10">
               <div className="w-full lg:flex lg:flex-row lg:gap-2">
-                <Autocomplete/>
+                <Autocomplete />
               </div>
               <div className="hidden lg:flex lg:gap-4">
                 {navigation.map((item) => (

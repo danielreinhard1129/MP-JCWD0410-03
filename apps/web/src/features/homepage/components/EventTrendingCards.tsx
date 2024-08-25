@@ -9,8 +9,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import useGetEvents from "@/hooks/api/event/useGetEvents";
 import Link from "next/link";
+import { format } from "date-fns";
 
-// const eventData = [
 //   {
 //     id: 1,
 //     category: "Music",
@@ -165,7 +165,8 @@ const EventTrendingCards: React.FC = () => {
                       {event.address}
                     </p>
                     <p className="mt-1 truncate text-sm text-gray-600">
-                      {event.startDate}
+                    {format(event.startDate, "dd MMM yyyy")} -{" "}
+                    {format(event.endDate, "dd MMM yyyy")}
                     </p>
                     <div className="mt-4 flex items-center justify-between border-t-[1px] border-gray-200 pt-2">
                       <p className="text-xs text-gray-500">Price</p>

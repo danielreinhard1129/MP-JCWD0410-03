@@ -1,5 +1,6 @@
 import { EventController } from '@/controllers/event.controller';
-import express from 'express';
+import { uploader } from '@/lib/multer';
+import { verifyToken } from '@/lib/verifyToken';
 import { Router } from 'express';
 
 export class EventRouter {
@@ -15,6 +16,12 @@ export class EventRouter {
   private initializeRoutes(): void {
     this.router.get('/', this.eventController.getEventsController);
     this.router.get('/:id', this.eventController.getEventController);
+    this.router.post(
+      '/',
+      verifyToken,
+      uploader().single('thumbnail'),
+      this.eventController.createEventController,
+    );
   }
 
   getRouter(): Router {
