@@ -2,7 +2,7 @@ import {
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
   CLOUDINARY_CLOUD_NAME,
-} from '@/config';
+} from '../config';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import * as streamifier from 'streamifier';
 
@@ -17,11 +17,12 @@ export const cloudinaryUpload = (
 ): Promise<UploadApiResponse> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
-      (error, result: UploadApiResponse) => {
+      (error: any, result: UploadApiResponse) => {
         if (error) return reject(error);
         resolve(result);
       },
     );
+
     streamifier.createReadStream(file.buffer).pipe(uploadStream);
   });
 };
@@ -38,6 +39,6 @@ export const cloudinaryRemove = async (secure_url: string) => {
 const extractPublicIdFromUrl = (url: string) => {
   const urlParts = url.split('/');
   const publicIdWithExtension = urlParts[urlParts.length - 1];
-  const publidId = publicIdWithExtension.split('.')[0];
-  return publidId;
+  const publicId = publicIdWithExtension.split('.')[0];
+  return publicId;
 };

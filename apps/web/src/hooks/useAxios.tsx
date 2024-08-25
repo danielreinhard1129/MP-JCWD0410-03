@@ -37,7 +37,7 @@ const useAxios = () => {
       axiosInstance.interceptors.request.eject(requestIntercept);
       axiosInstance.interceptors.response.eject(responseIntercept);
     };
-  }, [dispatch, token]);
+  }, [dispatch]);
 
   return { axiosInstance };
 };

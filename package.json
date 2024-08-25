@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
-    "nanoid": "^3.3.7"
+    "nanoid": "^3.3.7",
+    "react-quill": "^2.0.0"
   }
 }

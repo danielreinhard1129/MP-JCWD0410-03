@@ -22,7 +22,6 @@ import useGetEvent from "@/hooks/api/event/useGetEvent";
 import useGetEvents from "@/hooks/api/event/useGetEvents";
 import { Loader2 } from "lucide-react";
 
-
 interface Event {
   id: number;
   title: string;
@@ -47,9 +46,8 @@ const EventListCards: React.FC = () => {
 
   const { data, isPending } = useGetEvents({
     page,
-    take: 5,
+    take: 8,
   });
-
 
   const onPageChange = ({ selected }: { selected: number }) => {
     setPage(selected + 1);
@@ -174,7 +172,7 @@ const EventListCards: React.FC = () => {
       <div className="mt-6 flex justify-center">
         <Pagination
           total={data.meta.total || 0}
-          take={data.meta.take||0}
+          take={data.meta.take || 0}
           onPageChange={onPageChange}
           page={page}
         />

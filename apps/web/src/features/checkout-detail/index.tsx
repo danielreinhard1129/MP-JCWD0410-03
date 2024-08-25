@@ -5,13 +5,14 @@ import JumboCheckout from "./components/JumboCheckout";
 import CheckoutDesc from "./components/CheckoutDesc";
 import useGetEvent from "@/hooks/api/event/useGetEvent";
 import { notFound } from "next/navigation";
+import useGetTransaction from "@/hooks/api/transaction/useGetTransaction";
 
 interface CheckoutProps {
-  eventId: number;
+  transactionId: number;
 }
 
-const CheckoutPage: React.FC<CheckoutProps> = ({ eventId }) => {
-  const { data, isPending } = useGetEvent(eventId);
+const CheckoutPage: React.FC<CheckoutProps> = ({ transactionId }) => {
+  const { data, isPending } = useGetTransaction(transactionId);
 
   if (isPending) {
     return <h1>Loading...</h1>;
@@ -20,10 +21,18 @@ const CheckoutPage: React.FC<CheckoutProps> = ({ eventId }) => {
   if (!data) {
     return notFound();
   }
+
   return (
     <div className="mb-[30px]">
-      <JumboCheckout address={data.address} title={data.title} thumbnail={data.thumbnail}  startDate={data.startDate} endDate={data.endDate} />
-      <CheckoutDesc price={data.price} />
+      <JumboCheckout
+        eventId={data.event.id}
+        address={data.event.address}
+        title={data.event.title}
+        thumbnail={data.event.thumbnail}
+        startDate={data.event.startDate}
+        endDate={data.event.endDate}
+      />
+      <CheckoutDesc eventId={data.event.id} transactionId={data.id} />
     </div>
   );
 };

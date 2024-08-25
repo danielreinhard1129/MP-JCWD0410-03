@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import React from "react";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
@@ -7,6 +8,9 @@ export interface JumboProps {
   category?: string;
   title: string;
   address: string;
+  startDate: Date;
+  endDate: Date;
+  quota: number;
 }
 
 const JumboDetail: React.FC<JumboProps> = ({
@@ -14,7 +18,12 @@ const JumboDetail: React.FC<JumboProps> = ({
   category,
   title,
   address,
+  startDate,
+  endDate,
+  quota,
 }) => {
+  console.log(startDate);
+
   return (
     <div>
       <div className="container px-6 lg:container lg:max-w-7xl lg:px-0">
@@ -32,12 +41,18 @@ const JumboDetail: React.FC<JumboProps> = ({
               <div className="flex flex-col gap-1.5 lg:flex lg:flex-col lg:gap-2">
                 <div className="flex flex-row items-center gap-2">
                   <FaCalendarAlt className="text-[#0080ff]" />
-                  <p className="text-sm text-gray-500">21 August 2024</p>
+                  <p className="text-sm text-gray-500">
+                    {format(startDate, "dd MMM yyyy")} -{" "}
+                    {format(endDate, "dd MMM yyyy")}
+                  </p>
                 </div>
 
                 <div className="flex flex-row items-center gap-2">
                   <FaClock className="text-[#0080ff]" />
-                  <p className="text-sm text-gray-500">19:00 - 21:00 WIB</p>
+                  <p className="text-sm text-gray-500">
+                    {" "}
+                    {format(startDate, "HH:mm")} - {format(endDate, "HH:mm")}
+                  </p>
                 </div>
 
                 <div className="flex flex-row items-center gap-2">

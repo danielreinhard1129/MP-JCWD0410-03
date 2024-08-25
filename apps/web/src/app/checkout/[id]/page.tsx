@@ -4,7 +4,7 @@ import React from "react";
 const Checkout = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <CheckoutPage eventId={Number(params.id)} />
+      <CheckoutPage transactionId={Number(params.id)} />
     </div>
   );
 };

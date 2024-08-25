@@ -9,7 +9,7 @@ import JumboDetail from "./components/JumboDetail";
 interface EventProps {
   eventId: number;
 }
-// Periksa cara 'params' disediakan ke komponen
+
 const EventDetailPage: React.FC<EventProps> = ({ eventId }) => {
   const { data, isPending } = useGetEvent(eventId);
 
@@ -27,6 +27,9 @@ const EventDetailPage: React.FC<EventProps> = ({ eventId }) => {
         thumbnail={data?.thumbnail}
         address={data.address}
         title={data.title}
+        startDate={data.startDate}
+        endDate={data.endDate}
+        quota={data.quota}
       />
       <DescDetail description={data.description} eventId={data.id} />
     </div>
