@@ -5,7 +5,6 @@ import express, {
   Request,
   Response,
   NextFunction,
-  Router,
 } from 'express';
 import cors from 'cors';
 import { PORT } from './config';
@@ -13,6 +12,7 @@ import { SampleRouter } from './routers/sample.router';
 import { EventRouter } from './routers/event.router';
 import { AuthRouter } from './routers/auth.router';
 import { TransactionRouter } from './routers/transaction.router';
+import { ProfileRouter } from './routers/profile.router'; // Import ProfileRouter
 
 export default class App {
   private app: Express;
@@ -34,7 +34,7 @@ export default class App {
     // not found
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.path.includes('/api/')) {
-        res.status(404).send('Not found !');
+        res.status(404).send('Not found!');
       } else {
         next();
       }
@@ -58,6 +58,7 @@ export default class App {
     const authRouter = new AuthRouter();
     const transactionRouter = new TransactionRouter();
 
+    const profileRouter = new ProfileRouter();
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
@@ -67,6 +68,7 @@ export default class App {
     this.app.use('/api/auth', authRouter.getRouter());
     this.app.use('/api/transaction', transactionRouter.getRouter());
 
+    this.app.use('/api/profile', profileRouter.getRouter()); 
   }
 
   public start(): void {

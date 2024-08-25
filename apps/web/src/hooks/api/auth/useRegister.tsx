@@ -12,7 +12,7 @@ interface RegisterArgs {
   email: string;
   password: string;
   role: Role;
-
+  referal_number: string; 
 }
 
 const useRegister = () => {
@@ -26,6 +26,8 @@ const useRegister = () => {
         name: payload.name,
         email: payload.email,
         password: payload.password,
+        role: payload.role,
+        referal_number: payload.referal_number,
       });
 
       toast("Register Success");

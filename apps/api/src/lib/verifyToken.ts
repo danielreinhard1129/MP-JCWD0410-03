@@ -15,16 +15,16 @@ export const verifyToken = (
 
   if (!token) {
     return res.status(401).send({
-      message: 'token is missing',
+      message: 'Token is missing',
     });
   }
 
   verify(token, JWT_SECRET!, (err, payload) => {
     if (err) {
       if (err instanceof TokenExpiredError) {
-        return res.status(403).send({ message: 'token expired' });
+        return res.status(403).send({ message: 'Token expired' });
       } else {
-        return res.status(403).send({ message: 'unauthorized' });
+        return res.status(403).send({ message: 'Unauthorized' });
       }
     }
 

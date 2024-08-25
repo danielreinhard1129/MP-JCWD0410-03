@@ -9,7 +9,7 @@ import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
-import { logoutAction } from "@/redux/slices/userSlice";
+import { loginAction, logoutAction } from "@/redux/slices/userSlice";
 import AsyncSelect from "react-select/dist/declarations/src/Async";
 import Autocomplete from "./Autocomplete";
 
